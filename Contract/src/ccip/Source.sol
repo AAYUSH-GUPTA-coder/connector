@@ -20,13 +20,13 @@ contract Source {
 
     // struct to store the parameters for the strategy
     struct StrategyParams {
-        address token;
-        address destinationToken;
-        address user;
-        uint24 slippage;
-        uint256 gasFeeAmount;
-        uint256 leverage;
-        uint256 borrowPercentage;
+        address token; // address of the token in the source chain
+        address destinationToken; // address of the token in the destination chain
+        address user; // address of the user
+        uint24 slippage; // slippage to be used 
+        uint256 gasFeeAmount; // gas fee amount to be paid
+        uint256 leverage; // leverage to be used, 30 = 3x
+        uint256 borrowPercentage; // borrow percentage to be used
     }
 
     // event to emit when a cross-chain message is sent
@@ -34,11 +34,9 @@ contract Source {
         bytes32 messageId,
         uint256 amount,
         uint256 leverage,
-        // uint256 borrowPercentage,
-        // uint24 slippage,
         uint64 destinationChainSelector,
-        address receiver
-        // uint256 gasFeeAmount
+        address receiver,
+        address user
     );
 
     // modifier to check if the caller is the owner
@@ -61,21 +59,16 @@ contract Source {
     }
 
     // function to withdraw the token from the contract
-    function withdraw(uint256 _amount, address _token) external onlyOwner {
-        IERC20(_token).transfer(owner, _amount);
+    function withdraw(uint256 _amount, address _token, address _receiver) external onlyOwner {
+        IERC20(_token).transfer(_receiver, _amount);
     }
 
     // function to call the strategy. This function is called by the user
     function callStrategy(
         StrategyParams memory params,
-        // address _token, // address of the token to be deposited
-        // address _destinationToken, // address of the token in destination chain
         address _sourcePool, // address of the sourcePool to deposit the token
         uint256 _amount, // amount of the token to be deposited
-        // uint256 _gasFeeAmount, // amount of gas fee to be paid
         address _receiver, // address of the receiver contract on destination chain
-        // uint256 _leverage, // leverage to be used
-        // uint256 _borrowPercentage, // borrow percentage to be used
         uint64 _destinationChainSelector // chain selector of the destination chain // uint24 _slippage // slippage to be used
     ) external {
         // receive token from the user
@@ -94,7 +87,6 @@ contract Source {
             revert Source__TransferFailed();
         }
 
-        //! commented this for smart contract test
         // calling the cross-chain transfer function
         crossChainTransfer(
             _receiver,
@@ -164,11 +156,9 @@ contract Source {
             messageId,
             _amount,
             _leverage,
-            // _borrowPercentage,
-            // _slippage,
             _destinationChainSelector,
-            _receiver
-            // _gasFeeAmount
+            _receiver,
+            msg.sender
         );
 
         // Return the message ID
@@ -185,7 +175,7 @@ contract Source {
     }
 
     // function to get the balance of the token
-    function getTokenBalance(address _token) external view returns (uint256) {
+    function getTokenBalanceContract(address _token) external view returns (uint256) {
         return IERC20(_token).balanceOf(address(this));
     }
 
