@@ -32,9 +32,6 @@ contract SourcePool {
         owner = _owner;
     }
 
-    // function to deposit tokens into the SourcePool
-    function deposit(uint256 _amount, address _token) external {}
-
     // function to withdraw tokens from the SourcePool
     function withdraw(
         uint256 _amount,
