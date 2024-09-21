@@ -45,7 +45,7 @@ contract SourcePool {
     //----------------------------//
 
     //   function to get the balance of the SourcePool
-    function getBalance(address _token) external view returns (uint256) {
+    function getContractBalance(address _token) external view returns (uint256) {
         return IERC20(_token).balanceOf(address(this));
     }
 
