@@ -54,28 +54,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
           </Link>
         </div>
 
-        {marketingConfig.mainNav && marketingConfig.mainNav.length > 0 ? (
-          <nav className="hidden gap-6 md:flex">
-            {marketingConfig.mainNav.map((item, index) => (
-              <Link
-                key={index}
-                href={item.disabled ? "#" : item.href}
-                prefetch={true}
-                className={cn(
-                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                  item.href.startsWith(`/${selectedLayout}`)
-                    ? "text-foreground"
-                    : "text-foreground/60",
-                  item.disabled && "cursor-not-allowed opacity-80"
-                )}
-              >
-                {item.title}
-              </Link>
-            ))}
-          </nav>
-        ) : null}
-
-        {true ? (
+        {!isConnected ? (
           <w3m-button balance="hide" size="md" />
         ) : (
           <DropdownMenu>

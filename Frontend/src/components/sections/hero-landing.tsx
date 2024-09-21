@@ -40,7 +40,7 @@ export default async function HeroLanding() {
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
           <Link
-            href="/dashboard"
+            href="/pools"
             prefetch={true}
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
