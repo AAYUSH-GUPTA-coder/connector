@@ -13,3 +13,9 @@
 [submodule "Contract/lib/chainlink-local"]
 	path = Contract/lib/chainlink-local
 	url = https://github.com/smartcontractkit/chainlink-local
+[submodule "Contract/lib/layerzero-v2"]
+	path = Contract/lib/layerzero-v2
+	url = https://github.com/LayerZero-Labs/layerzero-v2
+[submodule "Contract/lib/devtools"]
+	path = Contract/lib/devtools
+	url = https://github.com/LayerZero-Labs/devtools
