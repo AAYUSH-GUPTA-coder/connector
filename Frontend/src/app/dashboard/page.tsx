@@ -25,11 +25,19 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SourceABI, WST_ETH_ARBITRUM, WST_ETH_BASE } from "@/lib/constants";
+import useAllowance from "@/hooks/useAllowance";
+import {
+  SourceABI,
+  Source_Address_Arbitrum,
+  Source_Pool_Addresss_Arbitrum,
+  WST_ETH_ARBITRUM,
+  WST_ETH_BASE,
+} from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { parseEther } from "viem";
 import { useAccount, useWriteContract } from "wagmi";
 
 const chartData = [
@@ -52,14 +60,43 @@ export default function Dashboard() {
   const [leverage, setLeverage] = useState(30);
 
   const { address } = useAccount();
+  const { checkAllowance, approveAllowance } = useAllowance();
 
-  const { data: hash, writeContract } = useWriteContract();
+  const { data: hash, writeContract, error } = useWriteContract();
 
-  const handleDeposit = (e: React.FormEvent) => {
+  console.log(error);
+
+  const handleDeposit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(`Depositing ${depositAmount} Wsteth`);
+    console.log("Leverage amount", leverage);
+
+    // const depositAmountWei = parseEther(depositAmount);
+
+    // const allowance = await checkAllowance(
+    //   WST_ETH_ARBITRUM,
+    //   Source_Address_Arbitrum
+    // );
+
+    // Check if approval is needed
+    // console.log("this is allowance", allowance);
+
+    // if (parseInt(allowance!) < depositAmountWei) {
+    //   console.log("Approval needed. Requesting approval...");
+    //   try {
+    //     await approveAllowance(
+    //       WST_ETH_ARBITRUM,
+    //       Source_Address_Arbitrum,
+    //       depositAmount
+    //     );
+    //   } catch (error) {
+    //     console.error("Approval failed:", error);
+    //     return;
+    //   }
+    // }
+
     writeContract({
-      address: "0x...", // Replace with your contract address
+      address: Source_Address_Arbitrum, // Replace with your contract address
       abi: SourceABI,
       functionName: "callStrategy",
       args: [
@@ -68,16 +105,17 @@ export default function Dashboard() {
           destinationToken: WST_ETH_BASE,
           user: address as `0x${string}`,
           slippage: 100,
-          gasFeeAmount: BigInt(0), //need to be calculated
+          gasFeeAmount: BigInt(2000000), //need to be calculated
           leverage: BigInt(leverage),
           borrowPercentage: BigInt(103),
         },
-        "0x", //source pool
-        BigInt(depositAmount),
-        "0x", //reciever
+        Source_Pool_Addresss_Arbitrum,
+        parseEther(depositAmount),
+        "0xb12081B5d7E1168847a4548e3f8FF27Dd6886916",
         BigInt(15971525489660198786),
       ],
     });
+    console.log("txn hash", hash);
   };
 
   return (
@@ -231,8 +269,9 @@ export default function Dashboard() {
                 </Select>
                 <Slider
                   defaultValue={[leverage]}
-                  max={100}
-                  step={1}
+                  min={10}
+                  max={50}
+                  step={10}
                   onValueChange={(newValue: number[]) => {
                     setLeverage(newValue[0]);
                   }}

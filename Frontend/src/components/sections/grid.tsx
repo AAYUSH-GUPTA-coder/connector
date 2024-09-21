@@ -1,5 +1,4 @@
 import {
-  ArrowRightIcon,
   BarChartIcon,
   LayersIcon,
   LightningBoltIcon,

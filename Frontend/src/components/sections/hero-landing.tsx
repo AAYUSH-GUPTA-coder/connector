@@ -44,7 +44,7 @@ export default async function HeroLanding() {
             prefetch={true}
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
-            <span>Start Connecting</span>
+            <span>Get started</span>
             <Icons.arrowRight className="size-4" />
           </Link>
           {/* <Link

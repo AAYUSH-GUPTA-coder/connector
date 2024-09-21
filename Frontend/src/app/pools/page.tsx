@@ -56,7 +56,7 @@ const invoices = [
 export default function page() {
   return (
     <section className="container mx-auto my-10">
-      <Table className="bg-accent rounded-xl">
+      <Table className="border border-border rounded-xl">
         <TableHeader>
           <TableRow>
             <TableHead className="w-1/2 text-lg py-4 px-8">Pools</TableHead>

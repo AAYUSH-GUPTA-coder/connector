@@ -16,11 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { LogOutIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAccount } from "wagmi";
 import { Icons } from "../shared/icons";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -75,7 +75,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
           </nav>
         ) : null}
 
-        {!isConnected ? (
+        {true ? (
           <w3m-button balance="hide" size="md" />
         ) : (
           <DropdownMenu>
@@ -88,7 +88,6 @@ export function NavBar({ scroll = false }: NavBarProps) {
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   if (theme === "light") {
@@ -99,20 +98,19 @@ export function NavBar({ scroll = false }: NavBarProps) {
                 }}
               >
                 {theme === "light" ? (
-                  <div className="flex gap-1 items-center">
+                  <div className="flex gap-2 items-center">
                     <Icons.sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 w-4 h-4" />
                     <p>Toggle theme</p>
                   </div>
                 ) : (
-                  <div className="flex gap-1 item">
+                  <div className="flex gap-2 items-center">
                     <Icons.moon className="rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 w-4 h-4" />
                     <p>Toggle theme</p>
                   </div>
                 )}
               </DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-1"
+                className="flex items-center gap-2"
                 onClick={() => {
                   open();
                 }}

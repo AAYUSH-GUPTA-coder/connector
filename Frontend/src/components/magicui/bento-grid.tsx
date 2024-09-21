@@ -1,8 +1,9 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { IconProps } from "@radix-ui/react-icons/dist/types";
 
 const BentoGrid = ({
   children,
@@ -35,7 +36,9 @@ const BentoCard = ({
   name: string;
   className: string;
   background: ReactNode;
-  Icon?: any;
+  Icon?: React.ForwardRefExoticComponent<
+    IconProps & React.RefAttributes<SVGSVGElement>
+  >;
   description: string;
   href: string;
   cta: string;
