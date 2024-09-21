@@ -18,6 +18,7 @@ createWeb3Modal({
   wagmiConfig: config,
   projectId,
   enableAnalytics: true,
+  enableEIP6963: true,
 });
 
 export default function AppKitProvider({

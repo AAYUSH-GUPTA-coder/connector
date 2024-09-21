@@ -1,7 +1,7 @@
 import { SidebarNavItem, SiteConfig } from "../types";
 
 export const siteConfig: SiteConfig = {
-  name: "Blooping",
+  name: "Connector",
   description: "Stake your wstEth and earn unbelievable yield",
   url: "localhost:3000",
   ogImage: `localhost:3000/_static/og.jpg`,
@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
     twitter: "",
     github: "",
   },
-  mailSupport: "support@blooping.com",
+  mailSupport: "support@connector.com",
 };
 
 export const footerLinks: SidebarNavItem[] = [
