@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import {IERC20} from "../src/interfaces/IERC20.sol";
-import {LoopStrategyBase} from "../src/LoopStrategyBase.sol";
+import {LoopStrategyBase} from "../src/ccip/LoopStrategyBase.sol";
 import {ICreditDelegationToken} from "../src/interfaces/ICreditDelegationToken.sol";
 
 import {IPool} from "../src/interfaces/IPool.sol";
@@ -42,7 +42,7 @@ contract TestLoopStrategyBase is Test {
         aavePoolBase = IPool(addressesProviderBase.getPool());
     }
 
-    function testLoopStrategyBaseWstethBase() public {
+    function testLoopStrategyBaseWsteth() public {
         address user = address(123);
         console.log("Address of the User", user);
         uint256 amount = 1 ether;
@@ -112,8 +112,5 @@ contract TestLoopStrategyBase is Test {
     }
 }
 
-// forge test --match-path testLoopStrategyBaseWstethBase --fork-url $BASE_MAINNET_RPC
-// forge test --match-test testLoopStrategyBaseWstethBase --fork-url $BASE_MAINNET_RPC --network mainnet
-// forge test --match-test testLoopStrategyBaseWstethBase --fork-url $BASE_MAINNET_RPC --network mainnet
-// forge test --match-test testLoopStrategyBaseWstethBase --fork-url $BASE_MAINNET_RPC -vvv
-// forge test --match-test testLoopStrategyBaseWstethBase --fork-url https://base-mainnet.g.alchemy.com/v2/Nm7dXKQLXztV72nsIGKSMbjp6fxPEazb -vvv
+
+// forge test --match-test testLoopStrategyBaseWsteth--fork-url $BASE_MAINNET_RPC -vvv
