@@ -8,7 +8,12 @@ At Connector, we're reimagining the future of decentralized finance by breaking 
 
 ## Architecture
 
-![Connector Architecture](https://res.cloudinary.com/dazemzk7u/image/upload/v1725810223/z9rilkolypp5a6fqduv6.jpg)
+![Connector Architecture 1](https://res.cloudinary.com/dmojdu128/image/upload/v1726932497/jadiaylxybyqjlkwmj0v.png)
+![Connector Architecture 4](https://res.cloudinary.com/dmojdu128/image/upload/v1726932497/xcyjdjtkyoem9bwrdxkw.png)
+![Connector Architecture 3](https://res.cloudinary.com/dmojdu128/image/upload/v1726932497/f9hp5u2apoxjvedglymf.png)
+![Connector Architecture 5](https://res.cloudinary.com/dmojdu128/image/upload/v1726932497/tnaiujoge4sxdpbopa2r.png)
+![Connector Architecture 2](https://res.cloudinary.com/dmojdu128/image/upload/v1726932497/kc5lflmsgnb14wgizpcv.png)
+
 
 ## Key Features
 
