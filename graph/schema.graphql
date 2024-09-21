@@ -1,0 +1,12 @@
+type CrossChainMessageSent @entity(immutable: true) {
+  id: Bytes!
+  messageId: Bytes! # bytes32
+  amount: BigInt! # uint256
+  leverage: BigInt! # uint256
+  destinationChainSelector: BigInt! # uint64
+  receiver: Bytes! # address
+  user: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

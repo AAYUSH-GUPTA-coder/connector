@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 import { config } from "@/config/wallet-connect";
 import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
+import QueryProvider from "@/lib/query-provider";
 
 export default function RootLayout({
   children,
@@ -32,11 +33,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AppKitProvider initialState={initialState}>
-            <NavBar />
-            {children}
-            <Toaster richColors closeButton />
-          </AppKitProvider>
+          <QueryProvider>
+            <AppKitProvider initialState={initialState}>
+              <NavBar />
+              {children}
+              <Toaster richColors closeButton />
+            </AppKitProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
