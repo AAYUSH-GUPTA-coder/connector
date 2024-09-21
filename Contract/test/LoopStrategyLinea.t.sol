@@ -5,15 +5,15 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import {IERC20} from "../src/interfaces/IERC20.sol";
-import {LoopStrategyLinea} from "../src/layerzero/LoopStrategyLinea.sol";
+import {LoopStrategyZerolendLinea} from "../src/layerzero/LoopStrategyZerolendLinea.sol";
 import {ICreditDelegationToken} from "../src/interfaces/ICreditDelegationToken.sol";
 
 import {IPool} from "../src/interfaces/IPool.sol";
 import {IPoolAddressesProvider} from "../src/interfaces/IPoolAddressesProvider.sol";
 
-contract TestLoopStrategyZerolendLinea is Test {
+contract TestLoopStrategyLinea is Test {
     IERC20 public wstETH;
-    LoopStrategyLinea public loopStrategy;
+    LoopStrategyZerolendLinea public loopStrategy;
 
     IPool public aavePool;
     IPoolAddressesProvider public addressesProvider;
@@ -30,13 +30,13 @@ contract TestLoopStrategyZerolendLinea is Test {
     function setUp() public {
         // setup the value
         wstETH = IERC20(wstEthAddr);
-        loopStrategy = new LoopStrategyLinea(addressProvider, route, wethAddress);
+        loopStrategy = new LoopStrategyZerolendLinea(addressProvider, route);
 
         addressesProvider = IPoolAddressesProvider(addressProvider);
         aavePool = IPool(addressesProvider.getPool());
     }
 
-    function testLoopStrategyLinea() public {
+    function testLoopStrategyZerolend() public {
         address user = address(1);
         console.log("Address of the User", user);
 
@@ -67,11 +67,28 @@ contract TestLoopStrategyZerolendLinea is Test {
 
         loopStrategy.loopStrategy(
             wstEthAddr,
+            wethAddress,
             amount,
             22, // 2.2x
             user,
             70,
-            100
+            100,
+            10
+        );
+
+        console.log(
+            "Final balance of awstETH of USER:",
+            IERC20(aWstEthAddress).balanceOf(user)
+        );
+
+        console.log(
+            "Final balance of vWETH of USER:",
+            IERC20(vWethAddress).balanceOf(user)
+        );
+
+        console.log(
+            "Final balance of wstETH of LoopStategyZerolend contract:",
+            IERC20(wstEthAddr).balanceOf(address(loopStrategy))
         );
 
         console.log(
@@ -104,21 +121,9 @@ contract TestLoopStrategyZerolendLinea is Test {
             IERC20(aWstEthAddress).balanceOf(address(loopStrategy))
         );
 
-        console.log(
-            "Final balance of awstETH of USER:",
-            IERC20(aWstEthAddress).balanceOf(user)
-        );
-
-        console.log(
-            "Final balance of vWETH of USER:",
-            IERC20(vWethAddress).balanceOf(user)
-        );
-
-        console.log(
-            "Final balance of wstETH of LoopStategyZerolend contract:",
-            IERC20(wstEthAddr).balanceOf(address(loopStrategy))
-        );
-
         vm.stopPrank();
     }
 }
+
+// testLoopStrategyZerolend
+// forge test --match-test testLoopStrategyZerolend --fork-url $LINEA_MAINNET_RPC -vvv
