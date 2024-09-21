@@ -253,7 +253,7 @@ export default function Dashboard() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem
-                    value="linea"
+                    value="Linea"
                     className="flex items-center space-x-2"
                   >
                     <div className="flex flex-row items-center">
@@ -268,7 +268,7 @@ export default function Dashboard() {
                     </div>
                   </SelectItem>
                   <SelectItem
-                    value="base"
+                    value="Base"
                     className="flex items-center space-x-2"
                   >
                     <div className="flex flex-row items-center">
