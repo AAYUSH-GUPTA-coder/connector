@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   const { address } = useAccount();
 
-  const { data: hash, writeContract } = useWriteContract();
+  const { writeContract } = useWriteContract();
 
   const handleDeposit = (e: React.FormEvent) => {
     e.preventDefault();

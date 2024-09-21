@@ -16,14 +16,13 @@ export type NavItem = {
   badge?: number;
   disabled?: boolean;
   external?: boolean;
-  icon?: any;
+  icon?: string;
 };
 
 export type SidebarNavItem = {
   title: string;
   items: NavItem[];
-
-  icon?: any;
+  icon?: string;
 };
 
 export type MarketingConfig = {
