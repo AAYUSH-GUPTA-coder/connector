@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@tanstack/react-query": "^5.56.2",
+    "@web3modal/wagmi": "^5.1.9",
+    "wagmi": "^2.12.12"
+  }
+}
