@@ -75,7 +75,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
           </nav>
         ) : null}
 
-        {!isConnected ? (
+        {true ? (
           <w3m-button balance="hide" size="md" />
         ) : (
           <DropdownMenu>
