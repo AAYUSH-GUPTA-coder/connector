@@ -21,12 +21,6 @@ export function NavBar({ scroll = false }: NavBarProps) {
   const scrolled = useScroll(50);
   const selectedLayout = useSelectedLayoutSegment();
   const links = marketingConfig.mainNav;
-  const { open } = useWeb3Modal();
-  const { isConnected } = useAccount();
-
-  const connect = () => {
-    open();
-  };
 
   return (
     <header
@@ -40,7 +34,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
             <img
               src="_static/logo.png"
               alt=""
-              className="w-8 h-8 object-contain rounded-full"
+              className="w-8 h-8 object-contain rounded-full mix-blend-multiply"
             />
             <span className="font-urban text-xl font-bold">
               {siteConfig.name}
@@ -70,18 +64,7 @@ export function NavBar({ scroll = false }: NavBarProps) {
         </div>
 
         <div className="flex items-center space-x-3">
-          {isConnected ? (
-            <w3m-button balance="hide" size="md" />
-          ) : (
-            <Button
-              className="hidden gap-2 px-5 md:flex rounded-full"
-              variant="default"
-              size="sm"
-              onClick={connect}
-            >
-              Connect Wallet
-            </Button>
-          )}
+          <w3m-button balance="hide" size="md" />
           <ThemeSelector />
         </div>
       </section>

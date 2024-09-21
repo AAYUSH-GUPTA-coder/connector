@@ -1,17 +1,5 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import Transactions from "@/components/Transactions";
 import { Icons } from "@/components/shared/icons";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -21,6 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -31,16 +25,12 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import Image from "next/image";
-import { useAccount, useWriteContract } from "wagmi";
 import { SourceABI, WST_ETH_ARBITRUM, WST_ETH_BASE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import React, { useState } from "react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { useAccount, useWriteContract } from "wagmi";
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -82,9 +72,9 @@ export default function Dashboard() {
           leverage: BigInt(leverage),
           borrowPercentage: BigInt(103),
         },
-        "source pool",
+        "0x", //source pool
         BigInt(depositAmount),
-        "reciever",
+        "0x", //reciever
         BigInt(15971525489660198786),
       ],
     });
@@ -98,9 +88,6 @@ export default function Dashboard() {
             className={cn(
               "bg-transparent text-black dark:text-white border-r border-b border-gray-300 dark:border-gray-700",
               "group relative flex flex-col justify-center overflow-hidden rounded-xl",
-              // light styles
-              "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-              // dark styles
               "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] p-6"
             )}
           >
@@ -118,9 +105,6 @@ export default function Dashboard() {
             className={cn(
               "bg-transparent text-black dark:text-white border-r border-b border-gray-300 dark:border-gray-700",
               "group relative flex flex-col justify-between overflow-hidden rounded-xl",
-              // light styles
-              "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-              // dark styles
               "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] p-6"
             )}
           >
@@ -140,7 +124,6 @@ export default function Dashboard() {
             className={cn(
               "bg-transparent text-black dark:text-white border-r border-b border-gray-300 dark:border-gray-700",
               "group relative flex flex-col justify-between overflow-hidden rounded-xl",
-              "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
               "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] p-6"
             )}
           >
@@ -157,7 +140,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3 w-full">
+        <div className="grid gap-6 md:grid-cols-3 items-stretch w-full">
           <div className="md:col-span-2">
             <Card>
               <CardHeader>
@@ -213,83 +196,74 @@ export default function Dashboard() {
             </Card>
           </div>
 
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold ">
-                  Deposit Wsteth
-                </CardTitle>
-                <CardDescription>
-                  Amplify your yields by depositing Wsteth
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* <Card className="bg-yellow-100 text-yellow-800 mb-4">
-                  <CardContent className="p-3 text-sm">
-                    An underlying token of this vault does not meet all Beefy
-                    SAFU requirements.
-                    <Link href="#" className="underline ml-1">
-                      See details.
-                    </Link>
-                  </CardContent>
-                </Card> */}
-                <form onSubmit={handleDeposit} className="space-y-4">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select token" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem
-                        value="WstEth"
-                        className="flex items-center space-x-2"
-                      >
-                        <div className="flex flex-row">
-                          <img
-                            src="https://s2.coinmarketcap.com/static/img/coins/200x200/12409.png"
-                            alt="WstEth logo"
-                            width={24}
-                            height={24}
-                            className="rounded-full"
-                          />
-                          <span>WstEth</span>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Slider
-                    defaultValue={[leverage]}
-                    max={100}
-                    step={1}
-                    onValueChange={(newValue: number[]) => {
-                      setLeverage(newValue[0]);
-                    }}
-                  />
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>1X</span>
-                    <span>2X</span>
-                    <span>3X</span>
-                    <span>4X</span>
-                    <span>5X</span>
-                  </div>
-                  <Input
-                    type="number"
-                    placeholder="Amount to deposit"
-                    value={depositAmount}
-                    onChange={(e) => setDepositAmount(e.target.value)}
-                    className="w-full"
-                  />
-                  <Link
-                    href="#"
-                    onClick={handleDeposit}
-                    className={cn(
-                      buttonVariants({ size: "lg" }),
-                      "w-full rounded-full"
-                    )}
-                  >
-                    <span>Deposit</span>
-                    <Icons.arrowRight className="ml-2 size-4" />
-                  </Link>
-                </form>
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold ">
+                Deposit Wsteth
+              </CardTitle>
+              <CardDescription>
+                Amplify your yields by depositing Wsteth
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col justify-between items-stretch">
+              <form onSubmit={handleDeposit} className="space-y-4">
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select token" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem
+                      value="WstEth"
+                      className="flex items-center space-x-2"
+                    >
+                      <div className="flex flex-row">
+                        <img
+                          src="https://s2.coinmarketcap.com/static/img/coins/200x200/12409.png"
+                          alt="WstEth logo"
+                          width={24}
+                          height={24}
+                          className="rounded-full"
+                        />
+                        <span>wstETH</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <Slider
+                  defaultValue={[leverage]}
+                  max={100}
+                  step={1}
+                  onValueChange={(newValue: number[]) => {
+                    setLeverage(newValue[0]);
+                  }}
+                />
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>1X</span>
+                  <span>2X</span>
+                  <span>3X</span>
+                  <span>4X</span>
+                  <span>5X</span>
+                </div>
+                <Input
+                  type="number"
+                  placeholder="Amount to deposit"
+                  value={depositAmount}
+                  onChange={(e) => setDepositAmount(e.target.value)}
+                  className="w-full"
+                />
+                <Link
+                  href="#"
+                  onClick={handleDeposit}
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "w-full rounded-full"
+                  )}
+                >
+                  <span>Deposit</span>
+                  <Icons.arrowRight className="ml-2 size-4" />
+                </Link>
+              </form>
+              <div>
                 <div className="mt-4 text-sm text-muted-foreground">
                   <div className="flex justify-between">
                     <span>DEPOSIT FEE</span>
@@ -304,10 +278,12 @@ export default function Dashboard() {
                   The displayed APY accounts for performance fee that is
                   deducted from the generated yield only.
                 </p>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+
+        <Transactions />
       </div>
     </div>
   );
