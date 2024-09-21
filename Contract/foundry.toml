@@ -10,7 +10,9 @@ remappings = [
     '@chainlink/contracts/=lib/chainlink/contracts/',
     '@chainlink/local/=lib/chainlink-local/',
     '@layerzerolabs/oapp-evm/=lib/devtools/packages/oapp-evm/',
-    '@layerzerolabs/lz-evm-protocol-v2/=lib/layerzero-v2/packages/layerzero-v2/evm/protocol'
+    '@layerzerolabs/lz-evm-protocol-v2/=lib/layerzero-v2/packages/layerzero-v2/evm/protocol',
+    '@layerzerolabs/lz-evm-messagelib-v2/=lib/layerzero-v2/packages/layerzero-v2/evm/messagelib',
+    'solidity-bytes-utils/=lib/solidity-bytes-utils/'
 ]
 
 

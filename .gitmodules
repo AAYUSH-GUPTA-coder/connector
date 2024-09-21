@@ -19,3 +19,6 @@
 [submodule "Contract/lib/devtools"]
 	path = Contract/lib/devtools
 	url = https://github.com/LayerZero-Labs/devtools
+[submodule "Contract/lib/solidity-bytes-utils"]
+	path = Contract/lib/solidity-bytes-utils
+	url = https://github.com/GNSPS/solidity-bytes-utils
