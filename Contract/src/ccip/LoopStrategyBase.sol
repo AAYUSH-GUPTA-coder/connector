@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import {IERC20} from "./interfaces/IERC20.sol";
-import {ISwapRouter02} from "./interfaces/ISwapRouter02.sol";
-import {IPool} from "./interfaces/IPool.sol";
-import {IPoolAddressesProvider} from "./interfaces/IPoolAddressesProvider.sol";
+import {IERC20} from "../interfaces/IERC20.sol";
+import {ISwapRouter02} from "../interfaces/ISwapRouter02.sol";
+import {IPool} from "../interfaces/IPool.sol";
+import {IPoolAddressesProvider} from "../interfaces/IPoolAddressesProvider.sol";
 
 error FAILED_TO_RECEIVED();
 

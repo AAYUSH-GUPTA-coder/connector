@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol";
 import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
-import {IERC20} from "./interfaces/IERC20.sol";
+import {IERC20} from "../interfaces/IERC20.sol";
 
 error DestinationPool__onlyOwnerCanCall(address);
 error DestinationPool__ccipReceiveError();
