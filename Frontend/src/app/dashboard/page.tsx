@@ -1,7 +1,7 @@
 "use client";
 import Transactions from "@/components/Transactions";
 import { Icons } from "@/components/shared/icons";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -63,8 +63,11 @@ export default function Dashboard() {
   const { checkAllowance, approveAllowance } = useAllowance();
 
   const { data: hash, writeContract, error } = useWriteContract();
+  const [destinationChain, setDestinationChain] = useState("Base");
 
-  console.log(error);
+  const handleSwitchDestinationChain = (chain: string) => {
+    setDestinationChain(chain);
+  };
 
   const handleDeposit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,7 +137,7 @@ export default function Dashboard() {
             </CardContent>
             <CardHeader className="py-0">
               <CardTitle className="text-left p-0 text-xl text-grayscale-400">
-                TVL
+                Liquidity Facilated
               </CardTitle>
             </CardHeader>
           </Card>
@@ -244,6 +247,44 @@ export default function Dashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col justify-between items-stretch">
+              <Select onValueChange={handleSwitchDestinationChain}>
+                <SelectTrigger className="mb-4">
+                  <SelectValue placeholder="Select chain" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem
+                    value="linea"
+                    className="flex items-center space-x-2"
+                  >
+                    <div className="flex flex-row items-center">
+                      <img
+                        src="https://s2.coinmarketcap.com/static/img/coins/200x200/27657.png"
+                        alt="Base logo"
+                        width="24"
+                        height="24"
+                        className="mr-2 rounded-full"
+                      />
+                      <span>Linea</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="base"
+                    className="flex items-center space-x-2"
+                  >
+                    <div className="flex flex-row items-center">
+                      <img
+                        src="https://moonpay-marketing-c337344.payloadcms.app/media/base%20logo.webp"
+                        alt="Base logo"
+                        width="24"
+                        height="24"
+                        className="mr-2 rounded-full"
+                      />
+
+                      <span>Base</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               <form onSubmit={handleDeposit} className="space-y-4">
                 <Select>
                   <SelectTrigger>
@@ -289,18 +330,19 @@ export default function Dashboard() {
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
                   className="w-full"
+                  min={0}
                 />
-                <Link
-                  href="#"
+                <Button
                   onClick={handleDeposit}
                   className={cn(
                     buttonVariants({ size: "lg" }),
                     "w-full rounded-full"
                   )}
+                  disabled={parseFloat(depositAmount) <= 0}
                 >
                   <span>Deposit</span>
                   <Icons.arrowRight className="ml-2 size-4" />
-                </Link>
+                </Button>
               </form>
               <div>
                 <div className="mt-4 text-sm text-muted-foreground">
