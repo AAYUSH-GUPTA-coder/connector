@@ -1,7 +1,7 @@
 "use client";
 import Transactions from "@/components/Transactions";
 import { Icons } from "@/components/shared/icons";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -289,18 +289,19 @@ export default function Dashboard() {
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
                   className="w-full"
+                  min={0}
                 />
-                <Link
-                  href="#"
+                <Button
                   onClick={handleDeposit}
                   className={cn(
                     buttonVariants({ size: "lg" }),
                     "w-full rounded-full"
                   )}
+                  disabled={parseFloat(depositAmount) <= 0}
                 >
                   <span>Deposit</span>
                   <Icons.arrowRight className="ml-2 size-4" />
-                </Link>
+                </Button>
               </form>
               <div>
                 <div className="mt-4 text-sm text-muted-foreground">

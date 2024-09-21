@@ -8,11 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import formatAddress from "@/utils/formatAddress";
 import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
+import { MoveUpRight } from "lucide-react";
+import Link from "next/link";
 
 const query = gql`{
-  crossChainMessageSents() {
+  crossChainMessageSents(first: 5) {
     id
     messageId
     amount
@@ -50,6 +53,8 @@ export default function Transactions() {
     },
   });
 
+  console.log(error, "error");
+
   if (isFetching) return <p>Loading...</p>;
   if (error)
     return (
@@ -62,7 +67,7 @@ export default function Transactions() {
     <section className="container mx-auto">
       {data?.crossChainMessageSents &&
       data?.crossChainMessageSents.length > 0 ? (
-        <Table className="border border-border rounded-xl">
+        <Table className="bg-transparent text-black dark:text-white border border-gray-300 dark:border-gray-700 transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]">
           <TableHeader>
             <TableRow>
               <TableHead className="w-1/2">Transaction</TableHead>
@@ -74,14 +79,41 @@ export default function Transactions() {
           </TableHeader>
           <TableBody>
             {data?.crossChainMessageSents.map((data, index) => (
-              <TableRow key={index}>
-                <TableCell className="text-right">
-                  {data.transactionHash}
+              <TableRow key={index} className="hover:bg-transparent">
+                <TableCell className="text-left">
+                  <Link
+                    href={`https://arbiscan.io/tx/${data.transactionHash}`}
+                    className="flex items-center gap-2"
+                    target="_blank"
+                  >
+                    {formatAddress(data.transactionHash)}
+                    <MoveUpRight className="w-4 h-4" />
+                  </Link>
                 </TableCell>
-                <TableCell>{data.user}</TableCell>
-                <TableCell>{data.receiver}</TableCell>
-                <TableCell>{data.leverage}</TableCell>
-                <TableCell>{data.amount}</TableCell>
+                <TableCell>
+                  <Link
+                    href={`https://arbiscan.io/address/${data.user}`}
+                    className="flex items-center gap-2"
+                    target="_blank"
+                  >
+                    {formatAddress(data.user)}
+                    <MoveUpRight className="w-4 h-4" />
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link
+                    href={`https://arbiscan.io/address/${data.receiver}`}
+                    className="flex items-center gap-2"
+                    target="_blank"
+                  >
+                    {formatAddress(data.receiver)}
+                    <MoveUpRight className="w-4 h-4" />
+                  </Link>
+                </TableCell>
+                <TableCell>{data.leverage / 10}x</TableCell>
+                <TableCell className="text-right">
+                  {data.amount / 10 ** 18} wstETH
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
