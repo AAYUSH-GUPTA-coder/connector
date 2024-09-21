@@ -1,3 +1,5 @@
+"use client";
+
 import { Grid } from "@/components/sections/grid";
 import HeroLanding from "@/components/sections/hero-landing";
 import PreviewLanding from "@/components/sections/preview-landing";

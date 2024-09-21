@@ -10,7 +10,6 @@ import { useScroll } from "@/app/hooks/useScroll";
 import { Button } from "@/components/ui/button";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
-import { Icons } from "../shared/icons";
 import { ThemeSelector } from "./ThemeSelector";
 
 interface NavBarProps {
@@ -38,7 +37,11 @@ export function NavBar({ scroll = false }: NavBarProps) {
       <section className="flex items-center justify-between py-4 container mx-auto">
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-1.5">
-            <Icons.logo />
+            <img
+              src="_static/logo.png"
+              alt=""
+              className="w-8 h-8 object-contain rounded-full"
+            />
             <span className="font-urban text-xl font-bold">
               {siteConfig.name}
             </span>
