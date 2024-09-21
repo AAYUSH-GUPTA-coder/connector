@@ -1,4 +1,5 @@
 Source contract ARB MAINNET deployed at: 0x3E8c7e98d11C0fCD5d7B534ddbfEb1C14d3b4D81
 SourcePool contract ARB MAINNET deployed at: 0xb12081B5d7E1168847a4548e3f8FF27Dd6886916
-LoopStrategy contract BASE CHAIN deployed at: 0x3E8c7e98d11C0fCD5d7B534ddbfEb1C14d3b4D81
-(Receiver Address) Destination Pool contract BASE CHAIN deployed at: 0xb12081B5d7E1168847a4548e3f8FF27Dd6886916
+
+LoopStrategy contract BASE CHAIN deployed at: 0xaC2422F51bcED9E675690f988dEf412fB790A27D
+(Receiver Address)  Destination Pool contract BASE CHAIN deployed at: 0xaF4630AD752DEe2b85001767271933972891A461
