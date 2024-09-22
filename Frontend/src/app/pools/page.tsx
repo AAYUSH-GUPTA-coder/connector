@@ -14,15 +14,6 @@ import { useRouter } from "next/navigation";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-];
-
 export default function page() {
   const { address } = useAccount();
   const router = useRouter();
@@ -54,31 +45,27 @@ export default function page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow
-              key={invoice.invoice}
-              onClick={() => {
-                router.push("/dashboard");
-              }}
-              className="cursor-pointer"
-            >
-              <TableCell className="font-medium text-lg flex items-center gap-2 py-6 px-8">
-                <Avatar className="h-10 w-10">
-                  <AvatarImage src="https://s2.coinmarketcap.com/static/img/coins/200x200/12409.png" />
-                  <AvatarFallback>wstETH</AvatarFallback>
-                </Avatar>
-                <p className="font font-medium">wstETH</p>
-              </TableCell>
-              <TableCell className="text-lg">
-                {data ? parseFloat(formatEther(data)).toFixed(5) : null}
-              </TableCell>
-              <TableCell className="text-lg">{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-lg">{invoice.totalAmount}</TableCell>
-              <TableCell className="text-right text-lg px-8">
-                {invoice.totalAmount}
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableRow
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+            className="cursor-pointer"
+          >
+            <TableCell className="font-medium text-lg flex items-center gap-2 py-6 px-8">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src="https://s2.coinmarketcap.com/static/img/coins/200x200/12409.png" />
+                <AvatarFallback>wstETH</AvatarFallback>
+              </Avatar>
+              <p className="font font-medium">wstETH</p>
+            </TableCell>
+            <TableCell className="text-lg">
+              {/* {data ? parseFloat(formatEther(data as bigint)).toFixed(5) : null} */}
+              0.02
+            </TableCell>
+            <TableCell className="text-lg">12 wstETH</TableCell>
+            <TableCell className="text-lg">38%</TableCell>
+            <TableCell className="text-right text-lg px-8">$12000</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </section>

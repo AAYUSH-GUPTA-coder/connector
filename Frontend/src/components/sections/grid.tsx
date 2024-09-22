@@ -93,10 +93,13 @@ const features = [
 
 export function Grid() {
   return (
-    <BentoGrid className="px-4 pb-8 md:px-6 lg:px-8 xl:px-36 lg:grid-rows-3">
-      {features.map((feature) => (
-        <BentoCard key={feature.name} {...feature} />
-      ))}
-    </BentoGrid>
+    <section>
+      <h1 className="text-center font-medium text-5xl my-10">Features</h1>
+      <BentoGrid className="px-4 pb-8 md:px-6 lg:px-8 xl:px-36 lg:grid-rows-3">
+        {features.map((feature) => (
+          <BentoCard key={feature.name} {...feature} />
+        ))}
+      </BentoGrid>
+    </section>
   );
 }

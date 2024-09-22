@@ -34,7 +34,6 @@ import {
   WST_ETH_BASE,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { parseEther } from "viem";
