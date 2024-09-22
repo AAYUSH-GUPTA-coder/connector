@@ -9,6 +9,7 @@ contract DeployDestination is Script {
 
     // Mainnet addresses
     address constant BASE_CCIP_ROUTER = 0x881e3A65B4d4a04dD529061dd0071cf975F58bCD;
+    address constant UNISWAP_ROUTER = 0x2626664c2603336E57B271c5C0b26F421741e481;
     address constant BASE_LINK_TOKEN = 0x88Fb150BDc53A65fe94Dea0c9BA0a6dAf8C6e196;
     address public AAVE_ADDRESS_PROVIDER_BASE =
         0xe20fCBdBfFC4Dd138cE8b2E6FBb6CB49777ad64D;
@@ -25,8 +26,8 @@ contract DeployDestination is Script {
 
         LoopStrategyBase loopStrategy = new LoopStrategyBase(
             AAVE_ADDRESS_PROVIDER_BASE,
-            BASE_WETH_ADDRESS,
-            OWNER
+            UNISWAP_ROUTER,
+            BASE_WETH_ADDRESS
         );
 
         // Log the deployed contract address
