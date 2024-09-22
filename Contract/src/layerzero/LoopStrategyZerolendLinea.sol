@@ -138,6 +138,10 @@ contract LoopStrategyZerolendLinea {
         amountOut = router.exactInputSingle(params);
     }
 
+    //----------------------------//
+    //      view functions        //
+    //----------------------------//
+
     // Function to get the address of the router contract
     function getRouterAddr() external view returns (address) {
         return address(router);
