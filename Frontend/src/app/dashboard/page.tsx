@@ -125,8 +125,8 @@ export default function Dashboard() {
           },
           Source_Pool_Addresss_Arbitrum,
           parseEther(depositAmount),
-          "0xb12081B5d7E1168847a4548e3f8FF27Dd6886916",
-          BigInt(15971525489660198786),
+          "0xaF4630AD752DEe2b85001767271933972891A461",
+          BigInt("15971525489660198786"),
         ],
       });
       return;
@@ -152,6 +152,7 @@ export default function Dashboard() {
         parseEther(depositAmount),
         30183,
       ],
+      value: BigInt(2000000000000000),
     });
   };
 
