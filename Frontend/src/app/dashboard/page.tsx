@@ -28,10 +28,14 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useAllowance from "@/hooks/useAllowance";
 import {
   SourceABI,
+  SourceABILZ,
   Source_Address_Arbitrum,
+  Source_Addresss_Arbitrum_LZ,
   Source_Pool_Addresss_Arbitrum,
+  Source_Pool_Addresss_Arbitrum_LZ,
   WST_ETH_ARBITRUM,
   WST_ETH_BASE,
+  WST_ETH_LINEA,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
@@ -68,10 +72,15 @@ export default function Dashboard() {
     setDestinationChain(chain);
   };
 
+  if (error) {
+    console.log("error", error);
+  }
+
   const handleDeposit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(`Depositing ${depositAmount} Wsteth`);
     console.log("Leverage amount", leverage);
+    console.log("destination chain", destinationChain);
 
     // const depositAmountWei = parseEther(depositAmount);
 
@@ -97,27 +106,53 @@ export default function Dashboard() {
     //   }
     // }
 
+    if (destinationChain === "Base") {
+      console.log("doing a txn on base as destination chain");
+      writeContract({
+        address: Source_Address_Arbitrum, // Replace with your contract address
+        abi: SourceABI,
+        functionName: "callStrategy",
+        args: [
+          {
+            token: WST_ETH_ARBITRUM,
+            destinationToken: WST_ETH_BASE,
+            user: address as `0x${string}`,
+            slippage: 100,
+            gasFeeAmount: BigInt(2000000), //need to be calculated
+            leverage: BigInt(leverage),
+            borrowPercentage: BigInt(103),
+          },
+          Source_Pool_Addresss_Arbitrum,
+          parseEther(depositAmount),
+          "0xaF4630AD752DEe2b85001767271933972891A461",
+          BigInt("15971525489660198786"),
+        ],
+      });
+      return;
+    }
+
+    console.log("doing a txn on linea as destination chain");
+
     writeContract({
-      address: Source_Address_Arbitrum, // Replace with your contract address
-      abi: SourceABI,
+      address: Source_Addresss_Arbitrum_LZ, // Replace with your contract address
+      abi: SourceABILZ,
       functionName: "callStrategy",
       args: [
         {
           token: WST_ETH_ARBITRUM,
-          destinationToken: WST_ETH_BASE,
+          destinationToken: WST_ETH_LINEA,
           user: address as `0x${string}`,
           slippage: 100,
           gasFeeAmount: BigInt(2000000), //need to be calculated
           leverage: BigInt(leverage),
-          borrowPercentage: BigInt(103),
+          borrowPercentage: BigInt(70),
         },
-        Source_Pool_Addresss_Arbitrum,
+        Source_Pool_Addresss_Arbitrum_LZ,
         parseEther(depositAmount),
-        "0xb12081B5d7E1168847a4548e3f8FF27Dd6886916",
-        BigInt(15971525489660198786),
+        30183,
       ],
+      value: BigInt(2000000000000000),
     });
-    console.log("txn hash", hash);
   };
 
   return (
