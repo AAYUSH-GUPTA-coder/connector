@@ -2,7 +2,7 @@
 pragma solidity 0.8.24;
 
 import {IERC20} from "../interfaces/IERC20.sol";
-import {OApp, Origin, MessagingFee} from "@layerzerolabs/oapp-evm/contracts/oapp/OApp.sol";
+import {OAppSender, OAppCore, Origin, MessagingFee} from "@layerzerolabs/oapp-evm/contracts/oapp/OApp.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import { OptionsBuilder } from "@layerzerolabs/oapp-evm/contracts/oapp/libs/OptionsBuilder.sol";
 
@@ -10,9 +10,8 @@ error Source__TransferFailed();
 error Source__NotEnoughLinkBalance(uint256 balance, uint256 required);
 error Source__OnlyOwnerCanCall();
 
-contract Source is OApp{
-    // address of the owner
-    address private owner;
+contract SourceLZ is OAppSender {
+    using OptionsBuilder for bytes;
 
     // struct to store the parameters for the strategy
     struct StrategyParams {
@@ -34,27 +33,14 @@ contract Source is OApp{
         address receiver
     );
 
-    // // modifier to check if the caller is the owner
-    // modifier onlyOwner() {
-    //     if (msg.sender != owner) {
-    //         revert Source__OnlyOwnerCanCall();
-    //     }
-    //     _;
-    // }
-
     constructor(
         address _endpoint, // address of the source chain’s Endpoint Address for communicating with the protocol
         address _owner // address that will own the OApp contract
-    ) OApp(_endpoint, _owner) Ownable(_owner) {}
-
-    // function to set the owner of the contract
-    function setOwner(address _owner) external onlyOwner {
-        owner = _owner;
-    }
+    ) OAppCore(_endpoint, _owner) Ownable(_owner) {}
 
     // function to withdraw the token from the contract
-    function withdraw(uint256 _amount, address _token) external onlyOwner {
-        IERC20(_token).transfer(owner, _amount);
+    function withdraw(uint256 _amount, address _token, address _receiver) external onlyOwner {
+        IERC20(_token).transfer(_receiver, _amount);
     }
 
     // function to call the strategy. This function is called by the user
@@ -80,7 +66,6 @@ contract Source is OApp{
             revert Source__TransferFailed(); 
         }
 
-        //! commented this for smart contract test
         // calling the cross-chain transfer function
         _crossChainTransferLayerZero(
             _amount,
@@ -102,10 +87,6 @@ contract Source is OApp{
         uint256 _borrowPercentage, // borrow percentage to be used
         uint24 _slippage // slippage to be used
     ) private {
-        // Encodes the message before invoking _lzSend.
-        // Replace with whatever data you want to send!
-        // bytes memory _payload = abi.encode(_message);
-
         // encoding _payload with function signature
         bytes memory _payload = abi.encodeWithSignature(
                 "loopStrategy(address,uint256,uint256,address,uint256,uint24)",
@@ -126,7 +107,7 @@ contract Source is OApp{
             _payload,
             _options,
             // Fee in native gas and ZRO token.
-            MessagingFee(msg.value, 0), //! how to calculate the messaging fee (msg.value) value
+            MessagingFee(msg.value, 0), 
             //! set _gasFeeAmount + 100_000
             // Refund address in case of failed source message.
             payable(msg.sender)
@@ -141,11 +122,6 @@ contract Source is OApp{
     //----------------------------//
     //      view functions        //
     //----------------------------//
-
-    // function to get the owner of the contract
-    function getOwner() external view returns (address) {
-        return owner;
-    }
 
     // function to get the balance of the token
     function getTokenBalance(address _token) external view returns (uint256) {
