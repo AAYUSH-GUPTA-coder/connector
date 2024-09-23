@@ -1,10 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
 
-import { marketingConfig } from "@/app/config/marketing";
 import { siteConfig } from "@/app/config/site";
 import { useScroll } from "@/app/hooks/useScroll";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,7 +26,6 @@ interface NavBarProps {
 
 export function NavBar({ scroll = false }: NavBarProps) {
   const scrolled = useScroll(50);
-  const selectedLayout = useSelectedLayoutSegment();
   const { setTheme, theme } = useTheme();
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
@@ -62,12 +58,12 @@ export function NavBar({ scroll = false }: NavBarProps) {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar className="w-8 h-8">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="https://imgs.search.brave.com/MOmgOwZ8ZwntZ0vdSXusl4C_L52d04HwmfM7igDtJ-s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtd2l4bXAtZWQz/MGE4NmI4YzRjYTg4/Nzc3MzU5NGMyLndp/eG1wLmNvbS9mLzhh/NTFjNDkxLTQzZTMt/NGE1NS04MzY5LWU2/NmEyYzE2MDNiOS9k/ZWY5YzU3LWUwYjRk/N2EyLTFhY2ItNDky/YS05ZjdhLTE1NGEx/YmVkMjY1Zi5qcGcv/djEvZmlsbC93XzI1/MCxoXzI1MCxxXzcw/LHN0cnAvcGl4ZWxf/cG9ydHJhaXRfYnlf/ZzBycmFfZGVmOWM1/Ny0yNTB0LmpwZz90/b2tlbj1leUowZVhB/aU9pSktWMVFpTENK/aGJHY2lPaUpJVXpJ/MU5pSjkuZXlKemRX/SWlPaUoxY200NllY/QndPamRsTUdReE9E/ZzVPREl5TmpRek56/TmhOV1l3WkRReE5X/VmhNR1F5Tm1Vd0lp/d2lhWE56SWpvaWRY/SnVPbUZ3Y0RvM1pU/QmtNVGc0T1RneU1q/WTBNemN6WVRWbU1H/UTBNVFZsWVRCa01q/WmxNQ0lzSW05aWFp/STZXMXQ3SW1obGFX/ZG9kQ0k2SWp3OU1U/STRNQ0lzSW5CaGRH/Z2lPaUpjTDJaY0x6/aGhOVEZqTkRreExU/UXpaVE10TkdFMU5T/MDRNelk1TFdVMk5t/RXlZekUyTUROaU9W/d3ZaR1ZtT1dNMU55/MWxNR0kwWkRkaE1p/MHhZV05pTFRRNU1t/RXRPV1kzWVMweE5U/UmhNV0psWkRJMk5X/WXVhbkJuSWl3aWQy/bGtkR2dpT2lJOFBU/RXlPREFpZlYxZExD/SmhkV1FpT2xzaWRY/SnVPbk5sY25acFky/VTZhVzFoWjJVdWIz/QmxjbUYwYVc5dWN5/SmRmUS51bW5ENnBh/b01temw1Z0V3UV9B/U0RReWFLSGJSUGhz/aENYa0ZkOVYxU08w" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>iamharsh.eth</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {

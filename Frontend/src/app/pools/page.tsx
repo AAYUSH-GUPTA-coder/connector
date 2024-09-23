@@ -14,10 +14,10 @@ import { useRouter } from "next/navigation";
 import { formatEther } from "viem";
 import { useAccount, useReadContract } from "wagmi";
 
-export default function page() {
+export default function Page() {
   const { address } = useAccount();
   const router = useRouter();
-  const { data, error } = useReadContract({
+  const { data , error} = useReadContract({
     address: WST_ETH_ARBITRUM,
     abi: [
       {
@@ -31,6 +31,8 @@ export default function page() {
     functionName: "balanceOf",
     args: [address],
   });
+
+  console.log(data, error)
 
   return (
     <section className="container mx-auto my-10">
@@ -59,8 +61,7 @@ export default function page() {
               <p className="font font-medium">wstETH</p>
             </TableCell>
             <TableCell className="text-lg">
-              {/* {data ? parseFloat(formatEther(data as bigint)).toFixed(5) : null} */}
-              0.02
+              {data != null ? parseFloat(formatEther(data as bigint)).toFixed(5) : null}
             </TableCell>
             <TableCell className="text-lg">12 wstETH</TableCell>
             <TableCell className="text-lg">38%</TableCell>

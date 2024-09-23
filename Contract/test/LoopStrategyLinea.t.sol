@@ -69,7 +69,7 @@ contract TestLoopStrategyLinea is Test {
             wstEthAddr,
             wethAddress,
             amount,
-            22, // 2.2x
+            18, // 2.2x
             user,
             70,
             100,

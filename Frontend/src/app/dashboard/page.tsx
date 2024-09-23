@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import useAllowance from "@/hooks/useAllowance";
 import {
   SourceABI,
   SourceABILZ,
@@ -41,7 +40,7 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { parseEther } from "viem";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useSwitchChain, useWriteContract } from "wagmi";
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -61,11 +60,11 @@ const chartConfig = {
 export default function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [leverage, setLeverage] = useState(30);
+  const {switchChainAsync} = useSwitchChain()
 
   const { address } = useAccount();
-  const { checkAllowance, approveAllowance } = useAllowance();
 
-  const { data: hash, writeContract, error } = useWriteContract();
+  const { writeContract, error } = useWriteContract();
   const [destinationChain, setDestinationChain] = useState("Base");
 
   const handleSwitchDestinationChain = (chain: string) => {

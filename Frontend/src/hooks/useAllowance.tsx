@@ -1,17 +1,11 @@
 import { Erc20ABI } from "@/lib/constants";
 import getViemPublicClient from "@/utils/getViemPublicClient";
 import { formatUnits, parseUnits } from "viem";
-import {
-  useAccount,
-  useChainId,
-  useSwitchChain,
-  useWriteContract,
-} from "wagmi";
+import { useAccount, useChainId, useWriteContract } from "wagmi";
 
 export default function useAllowance() {
-  const { address, chainId } = useAccount();
+  const { address } = useAccount();
   const chainID = useChainId();
-  const { switchChain } = useSwitchChain();
 
   const { writeContractAsync } = useWriteContract();
 
@@ -37,18 +31,16 @@ export default function useAllowance() {
   ) {
     try {
       if (!address) return;
-      const client = getViemPublicClient(chainID);
-
-      await writeContractAsync({
+      const hash = await writeContractAsync({
         abi: Erc20ABI,
         address: contract,
         functionName: "approve",
         args: [spender, parseUnits(amount, 18)],
       });
 
-      return "";
+      return hash;
     } catch (error) {
-      // Logger.Error("Failed to approve allowance", error);
+      console.log(error);
     }
   }
 
