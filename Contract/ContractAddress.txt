@@ -14,9 +14,7 @@ SourcePoolLZ ARB contract deployed at: 0xaF4630AD752DEe2b85001767271933972891A46
 https://arbiscan.io/address/0xaF4630AD752DEe2b85001767271933972891A461#writeContract
 
 LoopStrategy contract LINEA CHAIN deployed at: 0x3E8c7e98d11C0fCD5d7B534ddbfEb1C14d3b4D81
-https://arbiscan.io/address/0x3e8c7e98d11c0fcd5d7b534ddbfeb1c14d3b4d81#writeContract
 https://lineascan.build/address/0x3e8c7e98d11c0fcd5d7b534ddbfeb1c14d3b4d81#writeContract
 
 Destination Pool contract LINEA CHAIN deployed at: 0xb12081B5d7E1168847a4548e3f8FF27Dd6886916
-https://arbiscan.io/address/0xb12081b5d7e1168847a4548e3f8ff27dd6886916#code
 https://lineascan.build/address/0xb12081b5d7e1168847a4548e3f8ff27dd6886916#writeContract
