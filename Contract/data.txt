@@ -1,0 +1,5 @@
+Address of wstETH in Arb = 0x5979D7b546E38E414F7E9822514be443A4800529;
+Address of wstETH in Linea = 0xB5beDd42000b71FddE22D3eE8a79Bd49A568fC8F;
+
+
+LayerZero _dstEid of Linea mainnet = 30183
